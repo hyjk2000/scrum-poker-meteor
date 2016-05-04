@@ -1,0 +1,65 @@
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Scrum Poker</title>
+</head>
+
+<body>
+  <header class="app-header">
+    <div class="wrapper">
+      <form class="js-table">
+        <h1><input type="text" placeholder="Type in table name" value={{table.name}}></h1>
+      </form>
+      <form class="js-story">
+        <h2><input type="text" placeholder="Type in story description" value={{table.story}}></h2>
+      </form>
+    </div>
+  </header>
+
+  <div class="app-content">
+    <div class="wrapper">
+
+      <div class="join">
+        <form class="js-join">
+          Observe or type your name to play:
+          <input type="text">
+          <button type="submit">Join</button>
+        </form>
+      </div>
+
+      <ul class="ops">
+        <li><button class="show">Show Votes</button></li>
+        <li class="float-right"><button class="clear">Clear</button></li>
+      </ul>
+
+      <ul class="values">
+        {{#each values}}
+          {{> value}}
+        {{/each}}
+      </ul>
+
+      <ul class="players">
+        {{#each players}}
+          {{> player}}
+        {{/each}}
+      </ul>
+    </div>
+  </div>
+</body>
+
+<template name="value">
+  <li>
+    <button data-value={{value}}>{{caption}}</button>
+  </li>
+</template>
+
+<template name="player">
+  <li>
+    <span class="name">{{name}}</span>
+    <div class="card">
+      <div class="back face">♤</div>
+      <div class="front face">{{vote}}</div>
+    </div>
+  </li>
+</template>

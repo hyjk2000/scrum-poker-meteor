@@ -1,0 +1,193 @@
+$spacing-unit:     30px;
+$on-palm:          600px;
+$on-laptop:        800px;
+
+$color-text:       #333;
+$color-text-i:     #AAA;
+$color-grey:       #CCC;
+
+@mixin media-query($device) {
+  @media screen and (max-width: $device) {
+    @content;
+  }
+}
+
+* {
+  @include type-regular;
+}
+
+pre, code {
+  @include type-code;
+}
+
+h1, h2 {
+  @include type-light;
+}
+
+h1 {
+  @include font-l1;
+
+  @include media-query($on-palm) {
+    @include font-m3;
+  }
+}
+
+h2 {
+  @include font-m3;
+}
+
+small {
+  font-size: 50%;
+}
+
+a {
+  color: inherit;
+}
+
+input {
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+  outline: none;
+}
+
+button {
+  background: $color-grey;
+  border-radius: 9px;
+  padding: .2em .5em;
+
+  @include font-m2;
+
+  &:active {
+    background: $color-text;
+    color: $color-text-i;
+  }
+}
+
+.float-right {
+  float: right;
+}
+
+.app-header {
+  background: $color-text;
+  color: $color-text-i;
+  padding: $spacing-unit / 2 0;
+
+  input {
+    width: 100%;
+  }
+}
+
+.app-content {
+  margin-top: $spacing-unit / 2;
+}
+
+.wrapper {
+  max-width: -webkit-calc(800px - (#{$spacing-unit} * 2));
+  max-width:         calc(800px - (#{$spacing-unit} * 2));
+  margin: 0 auto;
+  padding: 0 $spacing-unit;
+  overflow-y: auto;
+
+  @include media-query($on-laptop) {
+    max-width: -webkit-calc(800px - (#{$spacing-unit}));
+    max-width:         calc(800px - (#{$spacing-unit}));
+    padding-left: $spacing-unit / 2;
+    padding-right: $spacing-unit / 2;
+  }
+}
+
+.join {
+  @include font-m2;
+
+  input {
+    width: 210px;
+    border-bottom: 2px solid $color-text;
+    text-align: center;
+  }
+}
+
+.ops, .values, .players {
+  margin-top: $spacing-unit / 2;
+  margin-right: - $spacing-unit / 2;
+  margin-bottom: - $spacing-unit / 2;
+
+  li {
+    display: inline-block;
+    margin-right: $spacing-unit / 2;
+    margin-bottom: $spacing-unit / 2;
+  }
+}
+
+.players {
+  li {
+    position: relative;
+    margin-right: $spacing-unit / 2;
+    padding-right: 65px;
+    overflow: visible; // Make room for card flip
+
+    @include font-m2;
+
+    @include media-query($on-palm) {
+      @include font-m1;
+    }
+  }
+
+  .name {
+    line-height: 2.7em !important;
+    max-width: 210px;
+    text-align: right;
+    overflow-y: hidden;
+  }
+
+  .card {
+    position: absolute;
+    top: 0;
+    right: 0em;
+    transition: opacity .5s ease;
+    opacity: .1;
+
+    .face {
+      position: absolute;
+      top: 0;
+      right: 0;
+      transition: transform .5s ease;
+      text-align: center;
+      transform-style: preserve-3d;
+      backface-visibility: hidden;
+      background: white;
+      width: 2em;
+      border: 2px solid $color-text;
+      border-radius: 6px;
+      line-height: 2.5em;
+    }
+
+    .front.face {
+      transform: rotateY(180deg);
+    }
+  }
+
+  .voted .card {
+    opacity: 1;
+    animation: bounce ease 2s 1;
+
+    @keyframes bounce {
+      0% { transform: translateY(0) }
+      10% { transform: translateY(-20px) }
+      20% { transform: translateY(0) }
+      30% { transform: translateY(-10px) }
+      40% { transform: translateY(0) }
+    }
+  }
+
+  .voted.show .card {
+    .back.face {
+      transform: rotateY(-180deg);
+    }
+
+    .front.face {
+      transform: rotateY(0deg);
+    }
+  }
+}
